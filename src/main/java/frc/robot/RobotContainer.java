@@ -20,8 +20,8 @@ public class RobotContainer {
 
   public RobotContainer() {
     controller = new XboxController(0);
-    x = () -> controller.getLeftY();
-    y = () -> controller.getRightY();
+    y = () -> controller.getLeftY();
+    x = () -> controller.getRightX();
     m_DriveSubsystem = new DriveSubsystem();
     m_DriveCommand = new DriveCommand(m_DriveSubsystem, x, y);
     configureBindings();

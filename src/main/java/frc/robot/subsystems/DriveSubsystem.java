@@ -19,7 +19,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void drive(double x, double y) {
-    drive.tankDrive(x,y);
+    drive.arcadeDrive(y,x);
   }
 
   /**
