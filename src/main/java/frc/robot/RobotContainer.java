@@ -9,7 +9,6 @@ import frc.robot.commands.VisionCommand;
 
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -28,7 +27,6 @@ public class RobotContainer {
   private final DriveCommand m_DriveCommand;
 
   private final NetworkTableInstance inst;
-  private final NetworkTable table;
   private final PhotonCamera camera;
   private final VisionCommand m_VisionCommand;
   private final VisionSubsystem m_VisionSubsystem;
@@ -42,11 +40,11 @@ public class RobotContainer {
     m_DriveSubsystem.setDefaultCommand(m_DriveCommand);
 
     inst = NetworkTableInstance.getDefault();
-    table = inst.getTable("datatable");
+    inst.startServer();
 
     camera = new PhotonCamera("photonvision");
     m_VisionSubsystem = new VisionSubsystem();
-    m_VisionCommand = new VisionCommand(m_VisionSubsystem, camera, table);
+    m_VisionCommand = new VisionCommand(m_VisionSubsystem, camera);
     m_VisionSubsystem.setDefaultCommand(m_VisionCommand);
   }
 
