@@ -5,11 +5,20 @@
 package frc.robot;
 
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.VisionCommand;
+
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
+
 import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import org.photonvision.PhotonCamera;
 
 public class RobotContainer {
   private final XboxController controller;
@@ -18,23 +27,27 @@ public class RobotContainer {
   private final DriveSubsystem m_DriveSubsystem;
   private final DriveCommand m_DriveCommand;
 
+  private final NetworkTableInstance inst;
+  private final NetworkTable table;
+  private final PhotonCamera camera;
+  private final VisionCommand m_VisionCommand;
+  private final VisionSubsystem m_VisionSubsystem;
+
   public RobotContainer() {
     controller = new XboxController(0);
     y = () -> controller.getLeftY();
     x = () -> controller.getRightX();
     m_DriveSubsystem = new DriveSubsystem();
     m_DriveCommand = new DriveCommand(m_DriveSubsystem, x, y);
-    configureBindings();
     m_DriveSubsystem.setDefaultCommand(m_DriveCommand);
-  }
 
-  private void configureBindings() {
-    // new Trigger(m_DriveSubsystem::exampleCondition)
-    //     .onTrue(new DriveCommand(m_DriveSubsystem));
+    inst = NetworkTableInstance.getDefault();
+    table = inst.getTable("datatable");
 
-    // // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // // cancelling on release.
-    // m_driverController.b().whileTrue(m_DriveSubsystem.exampleMethodCommand());
+    camera = new PhotonCamera("photonvision");
+    m_VisionSubsystem = new VisionSubsystem();
+    m_VisionCommand = new VisionCommand(m_VisionSubsystem, camera, table);
+    m_VisionSubsystem.setDefaultCommand(m_VisionCommand);
   }
 
   public Command getAutonomousCommand() {
