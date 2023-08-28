@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -20,10 +17,11 @@ import edu.wpi.first.apriltag.AprilTagFields;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class OperatorConstants {
+  public static class Constantsq {
     public static final int kDriverControllerPort = 0;
-    public static final int CAMERA_HEIGHT_METERS = 0;
-    public static final int TARGET_HEIGHT_METERS = 0;
-    public static final int CAMERA_PITCH_RADIANS = 0;
+    public static final double CAMERA_TO_ROBOT_OFFSET_UP = 0;
+    public static final double CAMERA_TO_ROBOT_OFFSET_FORWARD = 0;
+    public static final String CAMERA_NAME = "photonvision";
+    public static final String ROBORIO_IP = "[blah]";
   }
 }

@@ -6,31 +6,27 @@ package frc.robot;
 
 import frc.robot.commands.VisionCommand;
 
-import frc.robot.subsystems.VisionSubsystem;
-import java.util.function.DoubleSupplier;
+import frc.robot.subsystems.PhotonVision;
 
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-
 import edu.wpi.first.wpilibj2.command.Command;
 
-import org.photonvision.PhotonCamera;
 
 public class RobotContainer {
 
   private final NetworkTableInstance inst;
-  private final PhotonCamera camera;
   private final VisionCommand m_VisionCommand;
-  private final VisionSubsystem m_VisionSubsystem;
+  private final PhotonVision m_VisionSubsystem;
 
   public RobotContainer() {
 
     inst = NetworkTableInstance.getDefault();
+    inst.stopServer();
+    inst.setServer(Constants.Constantsq.ROBORIO_IP);
     inst.startServer();
 
-    camera = new PhotonCamera("photonvision");
-    m_VisionSubsystem = new VisionSubsystem();
-    m_VisionCommand = new VisionCommand(m_VisionSubsystem, camera);
+    m_VisionSubsystem = new PhotonVision();
+    m_VisionCommand = new VisionCommand(m_VisionSubsystem);
     m_VisionSubsystem.setDefaultCommand(m_VisionCommand);
   }
 
