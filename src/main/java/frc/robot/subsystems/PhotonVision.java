@@ -5,6 +5,7 @@ import frc.robot.Constants;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.photonvision.EstimatedRobotPose;
@@ -48,10 +49,12 @@ public class PhotonVision extends SubsystemBase {
 
 
         // https://github.wpilib.org/allwpilib/docs/beta/java/edu/wpi/first/apriltag/AprilTagFieldLayout.html
-        // trying to find json at "/edu/wpi/first/apriltag/2023-chargedup.json"
         
-        //aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
-
+        try {
+            aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
+        } catch (IOException e) {
+            System.out.println("dang it");
+        }
 
         camera = new PhotonCamera(Constants.Constantsq.CAMERA_NAME);
         cameraToRobot = new Transform3d(new Translation3d(Constants.Constantsq.CAMERA_TO_ROBOT_OFFSET_FORWARD, 0.0, Constants.Constantsq.CAMERA_TO_ROBOT_OFFSET_UP), new Rotation3d(0.0,0.0,0.0));
